@@ -7,8 +7,12 @@ const router = Router();
 router.get("/products", (request, response) => {
     console.log(request.headers.cookie);
     console.log(request.cookies);
-    
-	response.send(mockProducts);
+	console.log(request.signedCookies.hello);
+	
+    if (request.signedCookies.hello && request.signedCookies.hello === "world")
+		return response.send(mockProducts)
+	
+	return response.status(403).send({ msg: "Sorry, you need the correct cookie"})
 });
 router.post("/products", (request, response) => {
 	const { body } = request;

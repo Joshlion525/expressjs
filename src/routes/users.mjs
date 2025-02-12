@@ -12,13 +12,20 @@ import {
 } from "../utils/validationSchemas.mjs";
 import { mockUsers } from "../utils/constants.mjs";
 
-
 const router = Router();
 
 router.get(
 	"/users",
 	checkSchema(getUsersValidationSchema),
 	(request, response) => {
+		console.log(request.session.id);
+		request.sessionStore.get(request.session.id, (err, sessionData) => {
+			if (err) {
+				console.log(err);
+				throw err;
+			}
+			console.log(sessionData);
+		});
 		const result = validationResult(request);
 		console.log(result);
 		const {
@@ -41,7 +48,9 @@ router.get("/users/:id", (request, response) => {
 	if (!findUser) return response.sendStatus(404);
 	return response.send(findUser);
 });
-router.post("/users",	checkSchema(createUsersValidationSchema),
+router.post(
+	"/users",
+	checkSchema(createUsersValidationSchema),
 	(request, response) => {
 		const result = validationResult(request);
 		console.log(result);
@@ -52,7 +61,8 @@ router.post("/users",	checkSchema(createUsersValidationSchema),
 		const newUser = { id: mockUsers[mockUsers.length - 1].id + 1, ...data };
 		mockUsers.push(newUser);
 		return response.status(201).send(newUser);
-	});
+	}
+);
 router.put("/users/:id", (request, response) => {
 	const {
 		body,
@@ -88,6 +98,5 @@ router.delete("/users/:id", (request, response) => {
 	mockUsers.splice(findUserIndex, 1);
 	return response.sendStatus(200);
 });
-
 
 export default router;
