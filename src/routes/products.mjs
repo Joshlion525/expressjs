@@ -5,6 +5,9 @@ import { mockProducts } from "../utils/constants.mjs";
 const router = Router();
 
 router.get("/products", (request, response) => {
+    console.log(request.headers.cookie);
+    console.log(request.cookies);
+    
 	response.send(mockProducts);
 });
 router.post("/products", (request, response) => {
@@ -42,5 +45,6 @@ router.put("/products/:id", (request, response) => {
 	mockProducts[findProductIndex] = { id: parsedId, ...body };
 	return response.sendStatus(204);
 });
+
 
 export default router;

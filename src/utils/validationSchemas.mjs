@@ -24,7 +24,7 @@ export const getUsersValidationSchema = {
 	filter: {
 		isString: true,
 		notEmpty: {
-			errorMessage: "Must nt be empty",
+			errorMessage: "Must not be empty",
 		},
 		isLength: {
 			options: {
