@@ -1,12 +1,11 @@
-import { Router } from "express";
+import { request, response, Router } from "express";
 import { getClientsValidation } from "../utils/validationSchemas.mjs";
 import { checkSchema, validationResult } from "express-validator";
 import { mockClients } from "../utils/constants.mjs";
 
-
 const router = Router();
 
-router.post("/auth", checkSchema(getClientsValidation), (request, response) => {
+router.post("/auth", checkSchema(getClientsValidation), (request, response) => {    
     const errors = validationResult(request);
     if (!errors.isEmpty()) {
         return response.status(400).json({ errors: errors.array() });
@@ -30,6 +29,8 @@ router.get("/auth/status", (request, response) => {
 		? response.status(200).send(request.session.client)
 		: response.status(401).send({ msg: "Not Authenticated" });
 });
+
+
 
 
 export default router;

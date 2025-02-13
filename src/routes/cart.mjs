@@ -2,9 +2,6 @@ import { Router } from "express";
 import { checkSchema, validationResult } from "express-validator";
 import { cartItemSchema } from "../utils/validationSchemas.mjs";
 
-
-
-
 const router = Router();
 
 router.post("/cart", checkSchema(cartItemSchema), (request, response) => {
