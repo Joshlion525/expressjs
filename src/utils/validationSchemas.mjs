@@ -16,6 +16,18 @@ export const createUsersValidationSchema = {
 		},
 	},
 	displayName: {
+		isLength: {
+			options: {
+				min: 5,
+				max: 10,
+			},
+			errorMessage:
+				"displayname must be at least 5 characters with max of 10 characters",
+		},
+		notEmpty: true,
+		isString: true,
+	},
+	password: {
 		notEmpty: true,
 	},
 };

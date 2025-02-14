@@ -12,6 +12,7 @@ import {
 } from "../utils/validationSchemas.mjs";
 import { mockUsers } from "../utils/constants.mjs";
 import { User } from "../mongoose/schemas/user.mjs";
+import { hashPassword } from "../utils/helpers.mjs";
 
 const router = Router();
 
@@ -56,8 +57,18 @@ router.post(
 		const result = validationResult(request);
 		if (!result.isEmpty()) return response.status(400).send(result.array());
 		const data = matchedData(request);
-		const newUser = new User(data);
+
 		try {
+			const existingUser = await User.findOne({
+				username: data.username,
+			});
+			if (existingUser) {
+				return response
+					.status(400)
+					.json({ msg: "Username already exists" });
+			}
+			data.password = hashPassword(data.password);
+			const newUser = new User(data);
 			const savedUser = newUser.save();
 			return response.status(201).send(savedUser);
 		} catch (err) {

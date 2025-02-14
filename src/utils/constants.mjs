@@ -5,8 +5,8 @@ export const mockUsers = [
 ];
 
 export const mockProducts = [
-	{ id: 12, name: "combat trouser", price: 14.99 },
-	{ id: 13, name: "denim shirt", price: 10.99 },
+	{ id: 12, name: "combat trouser", price: 14.99, quantity: "10" },
+	{ id: 13, name: "denim shirt", price: 10.99, quantity: "5" },
 ];
 
 export const mockClients = [
